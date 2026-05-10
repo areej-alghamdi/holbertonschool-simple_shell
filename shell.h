@@ -12,4 +12,7 @@
 
 extern char **environ;
 
+void parse_command(char *line, char **args);
+int execute_command(char **args, char **av, char *line);
+
 #endif
