@@ -22,15 +22,29 @@ This project is a simple UNIX command language interpreter. It reads commands fr
 
 ## Compilation and Installation
 To compile the shell, clone this repository and run the following command:
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+
+    gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+
 ## Examples
 
 ### Interactive Mode
-$ ./hsh($) ls
-AUTHORS  man_1_simple_shell  README.md  shell.h  main.c
-($) envUSER=ubuntuLANGUAGE=en_USPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin($) exit$
+
+    $ ./hsh
+    ($) ls
+    AUTHORS  man_1_simple_shell  README.md  shell.h  main.c
+    ($) env
+    USER=ubuntu
+    LANGUAGE=en_US
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    ($) exit
+    $
+
 ### Non-Interactive Mode
-$ echo "ls" | ./hshAUTHORS  man_1_simple_shell  README.md  shell.h  main.c$
+
+    $ echo "ls" | ./hsh
+    AUTHORS  man_1_simple_shell  README.md  shell.h  main.c
+    $
+
 ## Authors
 * Abeer Alsayari
 * Alghamdi Areej
