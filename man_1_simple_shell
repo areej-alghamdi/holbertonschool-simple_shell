@@ -1,0 +1,5 @@
+.TH SIMPLE_SHELL 1 "May 2026" "1.0" "Simple Shell Manual"
+.SH NAME
+simple_shell \- Task 0 by abeer alsayari
+.SH DESCRIPTION
+A basic shell command interpreter.
