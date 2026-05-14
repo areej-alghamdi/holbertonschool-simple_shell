@@ -54,12 +54,15 @@ int handle_builtins(char **args, char *line, char **av, int last_status)
 				write(STDERR_FILENO, args[1], _strlen(args[1]));
 				write(STDERR_FILENO, "\n", 1);
 				free(line);
+				free_env();
 				exit(2);
 			}
 			free(line);
+			free_env();
 			exit(status);
 		}
 		free(line);
+		free_env();
 		exit(last_status);
 	}
 	if (_strcmp(args[0], "env") == 0)

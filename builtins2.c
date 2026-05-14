@@ -40,6 +40,7 @@ int _setenv(char *name, char *value)
 	{
 		if (match_env_name(environ[i], name))
 		{
+			free(environ[i]);
 			environ[i] = new_var;
 			return (0);
 		}
@@ -57,6 +58,7 @@ int _setenv(char *name, char *value)
 		new_env[i] = environ[i];
 	new_env[i] = new_var;
 	new_env[i + 1] = NULL;
+	free(environ);
 	environ = new_env;
 	return (0);
 }
@@ -76,6 +78,7 @@ int _unsetenv(char *name)
 	{
 		if (match_env_name(environ[i], name))
 		{
+			free(environ[i]);
 			for (j = i; environ[j]; j++)
 				environ[j] = environ[j + 1];
 			return (0);

@@ -81,6 +81,7 @@ int execute_command(char **args, char **av, char *line, int *last_status)
 			perror(av[0]);
 			free(line);
 			free(cmd_path);
+			free_env();
 			exit(127);
 		}
 	}

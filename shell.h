@@ -1,7 +1,7 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-/* Advanced Tasks: 100% Custom Functions */
+/* Advanced Tasks: Memory Leak Free by Arwa Ahmed Al-Humrani */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,6 +39,8 @@ char *get_location(char *command);
 int execute_command(char **args, char **av, char *line, int *last_status);
 
 /* main.c */
+void init_env(void);
+void free_env(void);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void parse_command(char *line, char **args);
 

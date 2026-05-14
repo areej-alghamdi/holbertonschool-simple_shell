@@ -1,6 +1,48 @@
 #include "shell.h"
 
 /**
+ * init_env - copies the environment to the heap
+ */
+void init_env(void)
+{
+	int i = 0;
+	char **new_env;
+
+	if (!environ)
+	{
+		environ = malloc(sizeof(char *));
+		if (environ)
+			environ[0] = NULL;
+		return;
+	}
+	while (environ[i])
+		i++;
+	new_env = malloc(sizeof(char *) * (i + 1));
+	if (!new_env)
+		exit(1);
+	for (i = 0; environ[i]; i++)
+		new_env[i] = _strdup(environ[i]);
+	new_env[i] = NULL;
+	environ = new_env;
+}
+
+/**
+ * free_env - frees the heap-allocated environment
+ */
+void free_env(void)
+{
+	int i = 0;
+
+	if (environ)
+	{
+		for (i = 0; environ[i]; i++)
+			free(environ[i]);
+		free(environ);
+		environ = NULL;
+	}
+}
+
+/**
  * _getline - custom getline using static buffer
  * @lineptr: pointer to buffer
  * @n: buffer size
@@ -85,6 +127,7 @@ int main(int ac, char **av)
 	int last_status = 0;
 
 	(void)ac;
+	init_env();
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -95,6 +138,7 @@ int main(int ac, char **av)
 			if (isatty(STDIN_FILENO) && read_bytes == 0)
 				write(STDOUT_FILENO, "\n", 1);
 			free(line);
+			free_env();
 			exit(last_status);
 		}
 		if (line[read_bytes - 1] == '\n')
@@ -103,5 +147,6 @@ int main(int ac, char **av)
 		execute_command(args, av, line, &last_status);
 	}
 	free(line);
+	free_env();
 	return (last_status);
 }
