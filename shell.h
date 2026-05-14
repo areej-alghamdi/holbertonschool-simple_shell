@@ -26,7 +26,7 @@ char *_getenv(const char *name);
 
 /* builtins1.c */
 int _atoi_exit(char *s, int *error);
-int handle_builtins(char **args, char *line, char **av);
+int handle_builtins(char **args, char *line, char **av, int last_status);
 
 /* builtins2.c */
 int match_env_name(char *env_var, char *name);
@@ -36,7 +36,7 @@ int handle_env_builtins(char **args);
 
 /* exec.c */
 char *get_location(char *command);
-int execute_command(char **args, char **av, char *line);
+int execute_command(char **args, char **av, char *line, int *last_status);
 
 /* main.c */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);

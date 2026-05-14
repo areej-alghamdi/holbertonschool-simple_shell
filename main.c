@@ -27,7 +27,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	{
 		if (pos >= count)
 		{
-			count = read(STDIN_FILENO, buf, 1024); /* Fixed: Removed fileno */
+			count = read(STDIN_FILENO, buf, 1024);
 			pos = 0;
 			if (count <= 0)
 				return (i == 0 ? -1 : i);
@@ -82,6 +82,7 @@ int main(int ac, char **av)
 	char *line = NULL, *args[100];
 	size_t len = 0;
 	ssize_t read_bytes;
+	int last_status = 0;
 
 	(void)ac;
 	while (1)
@@ -94,13 +95,13 @@ int main(int ac, char **av)
 			if (isatty(STDIN_FILENO) && read_bytes == 0)
 				write(STDOUT_FILENO, "\n", 1);
 			free(line);
-			exit(0);
+			exit(last_status);
 		}
 		if (line[read_bytes - 1] == '\n')
 			line[read_bytes - 1] = '\0';
 		parse_command(line, args);
-		execute_command(args, av, line);
+		execute_command(args, av, line, &last_status);
 	}
 	free(line);
-	return (0);
+	return (last_status);
 }

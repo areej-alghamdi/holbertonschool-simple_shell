@@ -33,9 +33,10 @@ int _atoi_exit(char *s, int *error)
  * @args: parsed arguments
  * @line: input line
  * @av: main arguments
+ * @last_status: status of the last executed command
  * Return: 1 if executed, 0 otherwise
  */
-int handle_builtins(char **args, char *line, char **av)
+int handle_builtins(char **args, char *line, char **av, int last_status)
 {
 	int status = 0, error = 0, i = 0;
 
@@ -59,7 +60,7 @@ int handle_builtins(char **args, char *line, char **av)
 			exit(status);
 		}
 		free(line);
-		exit(0);
+		exit(last_status);
 	}
 	if (_strcmp(args[0], "env") == 0)
 	{

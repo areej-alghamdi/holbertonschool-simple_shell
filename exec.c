@@ -51,15 +51,16 @@ char *get_location(char *command)
  * @args: arguments array
  * @av: main arguments
  * @line: input line
+ * @last_status: pointer to update the exit status
  * Return: status
  */
-int execute_command(char **args, char **av, char *line)
+int execute_command(char **args, char **av, char *line, int *last_status)
 {
 	pid_t child_pid;
 	int status;
 	char *cmd_path;
 
-	if (args[0] == NULL || handle_builtins(args, line, av))
+	if (args[0] == NULL || handle_builtins(args, line, av, *last_status))
 		return (0);
 
 	cmd_path = get_location(args[0]);
@@ -69,6 +70,7 @@ int execute_command(char **args, char **av, char *line)
 		write(STDERR_FILENO, ": 1: ", 5);
 		write(STDERR_FILENO, args[0], _strlen(args[0]));
 		write(STDERR_FILENO, ": not found\n", 12);
+		*last_status = 127;
 		return (127);
 	}
 	child_pid = fork();
@@ -85,6 +87,8 @@ int execute_command(char **args, char **av, char *line)
 	else
 	{
 		wait(&status);
+		if (WIFEXITED(status))
+			*last_status = WEXITSTATUS(status);
 		free(cmd_path);
 	}
 	return (0);
