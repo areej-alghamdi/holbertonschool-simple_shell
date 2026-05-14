@@ -51,7 +51,7 @@ int execute_command(char **args, char **av, char *line)
 	if (full_path == NULL)
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", av[0], args[0]);
-		return (1);
+		return (127);
 	}
 	child_pid = fork();
 	if (child_pid == -1)
@@ -90,6 +90,7 @@ int main(int ac, char **av)
 	char *line = NULL, *args[100];
 	size_t len = 0;
 	ssize_t read_bytes;
+	int last_status = 0;
 
 	(void)ac;
 	while (1)
@@ -100,14 +101,14 @@ int main(int ac, char **av)
 		if (read_bytes == -1)
 		{
 			free(line);
-			exit(0);
+			exit(last_status);
 		}
 		if (line[read_bytes - 1] == '\n')
 			line[read_bytes - 1] = '\0';
 		parse_command(line, args);
 		if (args[0] == NULL)
 			continue;
-		execute_command(args, av, line);
+		last_status = execute_command(args, av, line);
 	}
 	free(line);
 	return (0);
