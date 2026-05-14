@@ -27,7 +27,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	{
 		if (pos >= count)
 		{
-			count = read(fileno(stream), buf, 1024);
+			count = read(STDIN_FILENO, buf, 1024); /* Fixed: Removed fileno */
 			pos = 0;
 			if (count <= 0)
 				return (i == 0 ? -1 : i);

@@ -71,5 +71,5 @@ int handle_builtins(char **args, char *line, char **av)
 		}
 		return (1);
 	}
-	return (0);
+	return (handle_env_builtins(args));
 }

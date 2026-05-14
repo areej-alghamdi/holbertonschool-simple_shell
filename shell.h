@@ -1,7 +1,7 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-/* Advanced Tasks: 100% Custom Functions by Abeer Alsayari */
+/* Advanced Tasks: 100% Custom Functions */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,9 +24,15 @@ int is_delim(char c, const char *delim);
 char *_strtok(char *str, const char *delim);
 char *_getenv(const char *name);
 
-/* builtins.c */
+/* builtins1.c */
 int _atoi_exit(char *s, int *error);
 int handle_builtins(char **args, char *line, char **av);
+
+/* builtins2.c */
+int match_env_name(char *env_var, char *name);
+int _setenv(char *name, char *value);
+int _unsetenv(char *name);
+int handle_env_builtins(char **args);
 
 /* exec.c */
 char *get_location(char *command);
