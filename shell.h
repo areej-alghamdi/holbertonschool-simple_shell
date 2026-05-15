@@ -1,47 +1,41 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-/* Advanced Tasks: Memory Leak Free by Arwa Ahmed Al-Humrani */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <signal.h>
 
 extern char **environ;
 
-/* strings1.c */
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
 
-/* strings2.c */
 int is_delim(char c, const char *delim);
 char *_strtok(char *str, const char *delim);
 char *_getenv(const char *name);
 
-/* builtins1.c */
 int _atoi_exit(char *s, int *error);
 int handle_builtins(char **args, char *line, char **av, int last_status);
 
-/* builtins2.c */
 int match_env_name(char *env_var, char *name);
 int _setenv(char *name, char *value);
 int _unsetenv(char *name);
 int handle_env_builtins(char **args);
 
-/* exec.c */
 char *get_location(char *command);
 int execute_command(char **args, char **av, char *line, int *last_status);
+void parse_command(char *line, char **args);
 
-/* main.c */
 void init_env(void);
 void free_env(void);
+void sigint_handler(int sig);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-void parse_command(char *line, char **args);
 
 #endif

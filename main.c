@@ -1,8 +1,5 @@
 #include "shell.h"
 
-/**
- * init_env - copies the environment to the heap
- */
 void init_env(void)
 {
 	int i = 0;
@@ -26,9 +23,6 @@ void init_env(void)
 	environ = new_env;
 }
 
-/**
- * free_env - frees the heap-allocated environment
- */
 void free_env(void)
 {
 	int i = 0;
@@ -42,13 +36,12 @@ void free_env(void)
 	}
 }
 
-/**
- * _getline - custom getline using static buffer
- * @lineptr: pointer to buffer
- * @n: buffer size
- * @stream: file stream
- * Return: bytes read
- */
+void sigint_handler(int sig)
+{
+	(void)sig;
+	write(STDOUT_FILENO, "\n($) ", 5);
+}
+
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	static char buf[1024];
@@ -94,31 +87,6 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	return (i);
 }
 
-/**
- * parse_command - splits input into tokens
- * @line: input string
- * @args: array to hold tokens
- */
-void parse_command(char *line, char **args)
-{
-	char *token;
-	int i = 0;
-
-	token = _strtok(line, " \n\t");
-	while (token != NULL)
-	{
-		args[i++] = token;
-		token = _strtok(NULL, " \n\t");
-	}
-	args[i] = NULL;
-}
-
-/**
- * main - shell entry point
- * @ac: arg count
- * @av: arg vector
- * Return: 0
- */
 int main(int ac, char **av)
 {
 	char *line = NULL, *args[100];
@@ -127,6 +95,7 @@ int main(int ac, char **av)
 	int last_status = 0;
 
 	(void)ac;
+	signal(SIGINT, sigint_handler);
 	init_env();
 	while (1)
 	{

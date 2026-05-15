@@ -1,10 +1,5 @@
 #include "shell.h"
 
-/**
- * get_location - finds command path
- * @command: command string
- * Return: full path or NULL
- */
 char *get_location(char *command)
 {
 	char *path, *path_copy, *path_token, *file_path;
@@ -46,14 +41,6 @@ char *get_location(char *command)
 	return (NULL);
 }
 
-/**
- * execute_command - forks and executes
- * @args: arguments array
- * @av: main arguments
- * @line: input line
- * @last_status: pointer to update the exit status
- * Return: status
- */
 int execute_command(char **args, char **av, char *line, int *last_status)
 {
 	pid_t child_pid;
@@ -93,4 +80,18 @@ int execute_command(char **args, char **av, char *line, int *last_status)
 		free(cmd_path);
 	}
 	return (0);
+}
+
+void parse_command(char *line, char **args)
+{
+	char *token;
+	int i = 0;
+
+	token = _strtok(line, " \n\t");
+	while (token != NULL)
+	{
+		args[i++] = token;
+		token = _strtok(NULL, " \n\t");
+	}
+	args[i] = NULL;
 }
