@@ -1,5 +1,38 @@
+cat << 'EOF' > AUTHORS
+# Tasks 0-22 contributors
+abeer alsayari <abeer.ali.alsaiari1@gmail.com>
+Areej Alghamdi <PUT_AREEJ_REAL_EMAIL_HERE>
+EOF
+
+cat << 'EOF' > man_1_simple_shell
 .TH SIMPLE_SHELL 1 "May 2026" "1.0" "Simple Shell Manual"
 .SH NAME
-simple_shell \- Task 0 by abeer alsayari
+simple_shell \- a basic UNIX command language interpreter
+.SH SYNOPSIS
+.B ./hsh
+.br
+.B echo "command" | ./hsh
 .SH DESCRIPTION
-A basic shell command interpreter.
+.B simple_shell
+is a straightforward command-line interpreter. It reads commands from the standard input or a file and executes them. It was built as a core project for the Holberton School curriculum.
+.SH BUILTIN COMMANDS
+The following builtin commands are supported:
+.TP
+.B exit [status]
+Exits the shell. If a status is provided, the shell exits with that integer status.
+.TP
+.B env
+Prints the current environment variables to the standard output.
+.TP
+.B setenv [variable] [value]
+Initializes a new environment variable, or modifies an existing one.
+.TP
+.B unsetenv [variable]
+Removes an environment variable.
+.SH AUTHORS
+Written by Abeer Alsayari and Areej Alghamdi.
+EOF
+
+git add AUTHORS man_1_simple_shell
+git commit -m "Task 0: Update AUTHORS with correct email and enhance man page"
+git push origin HEAD
