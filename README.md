@@ -9,9 +9,14 @@ This project is a simple UNIX command language interpreter. It reads commands fr
 * Handles commands with arguments (e.g., `ls -l`).
 * Implements `PATH` resolution (e.g., `ls` works without the full path).
 * Handles the End-Of-File (EOF) condition (`Ctrl+D`).
+* Handles the `SIGINT` signal (`Ctrl+C`) without terminating the shell.
+* Supports both interactive and non-interactive modes.
+* Returns proper exit status codes (e.g., `127` when a command is not found).
 * **Built-in commands:**
-  * `exit`: Exits the shell smoothly.
+  * `exit`: Exits the shell smoothly, with optional exit status.
   * `env`: Prints the current environment variables.
+  * `setenv VARIABLE VALUE`: Sets a new environment variable or updates an existing one.
+  * `unsetenv VARIABLE`: Removes an environment variable.
 
 ## Requirements
 * Allowed editors: `vi`, `vim`, `emacs`
