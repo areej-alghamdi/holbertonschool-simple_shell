@@ -1,2 +1,25 @@
+# Compiled binary
 hsh
+
+# Object files
 *.o
+*.obj
+
+# Editor and OS files
+*.swp
+*~
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Debug and core files
+*.core
+core
+vgcore.*
+
+# Temporary files
+*.tmp
+*.bak
+
+# Test artifacts
+hbtn_ls
