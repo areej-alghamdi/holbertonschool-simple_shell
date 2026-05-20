@@ -1,10 +1,21 @@
 #include "shell.h"
+/**
+ * get_location - searches for a command in the PATH directories
+ * @command: the name of the command to find (e.g. "ls")
+ *
+ * Description: If command contains a '/' or is in the current
+ * directory, check it directly. Otherwise, split PATH by ':' and
+ * search each directory until an executable file is found.
+ *
+ * Return: full path string (must be freed by caller), or NULL
+ * if not found or not executable.
+ */
 
 char *get_location(char *command)
 {
 	char *path, *path_copy, *path_token, *file_path;
 	int cmd_len, dir_len;
-	
+
 
 	if (access(command, X_OK) == 0)
 		return (_strdup(command));
@@ -40,6 +51,20 @@ char *get_location(char *command)
 	}
 	return (NULL);
 }
+
+/**
+ * execute_command - forks and executes a command in a child process
+ * @args: NULL-terminated array of arguments (args[0] is the command)
+ * @av: main argument vector (used for error message prefix)
+ * @line: input line buffer to free on child error
+ * @last_status: pointer to last command's exit status (updated here)
+ *
+ * Description: Handles built-in commands first. If not a builtin,
+ * finds the command path using get_location, forks, and executes.
+ * Prints an error and updates last_status to 127 if not found.
+ *
+ * Return: 0 on success or builtin handled, 127 if command not found
+ */
 
 int execute_command(char **args, char **av, char *line, int *last_status)
 {
@@ -81,6 +106,16 @@ int execute_command(char **args, char **av, char *line, int *last_status)
 	}
 	return (0);
 }
+
+/**
+ * parse_command - splits an input line into tokens (arguments)
+ * @line: the input string to tokenize (modified in place)
+ * @args: array to store the resulting token pointers
+ *
+ * Description: Uses _strtok with space, tab, and newline as
+ * delimiters. The last element of args is set to NULL so it can
+ * be passed directly to execve.
+ */
 
 void parse_command(char *line, char **args)
 {
