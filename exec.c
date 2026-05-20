@@ -4,9 +4,9 @@ char *get_location(char *command)
 {
 	char *path, *path_copy, *path_token, *file_path;
 	int cmd_len, dir_len;
-	struct stat buffer;
+	
 
-	if (stat(command, &buffer) == 0)
+	if (access(command, X_OK) == 0)
 		return (_strdup(command));
 	path = _getenv("PATH");
 	if (path)
@@ -28,7 +28,7 @@ char *get_location(char *command)
 			_strcpy(file_path, path_token);
 			_strcat(file_path, "/");
 			_strcat(file_path, command);
-			if (stat(file_path, &buffer) == 0)
+			if (access(file_path, X_OK) == 0)
 			{
 				free(path_copy);
 				return (file_path);
