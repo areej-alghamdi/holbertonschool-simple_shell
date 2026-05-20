@@ -17,8 +17,12 @@ char *get_location(char *command)
 	int cmd_len, dir_len;
 
 
-	if (access(command, X_OK) == 0)
-		return (_strdup(command));
+	if (strchr(command, '/') != NULL)
+        {
+                if (access(command, X_OK) == 0)
+                        return (_strdup(command));
+                return (NULL);
+        }
 	path = _getenv("PATH");
 	if (path)
 	{
