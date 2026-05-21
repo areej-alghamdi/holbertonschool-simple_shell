@@ -36,4 +36,5 @@ char *_itoa(int num);
 void expand_variables(char **args, int last_status);
 void remove_comments(char *line);
 
+int handle_cd(char **args);
 #endif
