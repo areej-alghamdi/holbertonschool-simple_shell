@@ -101,10 +101,10 @@ int handle_cd(char **args, char **av, int *last_status)
 		target = oldpwd;
 	else
 		target = args[1];
-	if (target == NULL || chdir(target) != 0)
-	if (args[1] == NULL && home == NULL)
-		return (1);
-	{
+        if (args[1] == NULL && home == NULL)
+                return (1);
+        if (target == NULL || chdir(target) != 0)
+        {
 		
 	    write(STDERR_FILENO, av[0], _strlen(av[0]));
 		write(STDERR_FILENO, ": 1: cd: can't cd to ", 21);
