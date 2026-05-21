@@ -55,7 +55,7 @@ int main(int ac, char **av)
     {
         if (isatty(STDIN_FILENO))
             write(STDOUT_FILENO, "($) ", 4);
-        read_bytes = _getline(&line, &len, stdin);
+        read_bytes = getline(&line, &len, stdin);
         if (read_bytes <= 0)
         {
             if (isatty(STDIN_FILENO) && read_bytes == 0)

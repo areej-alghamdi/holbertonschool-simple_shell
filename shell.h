@@ -32,7 +32,6 @@ void parse_command(char *line, char **args);
 void init_env(void);
 void free_env(void);
 void sigint_handler(int sig);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_itoa(int num);
 void expand_variables(char **args, int last_status);
 void remove_comments(char *line);
