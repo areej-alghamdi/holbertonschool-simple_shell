@@ -1,7 +1,6 @@
 #include "shell.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
 
 /**
  * _itoa - Converts an integer to a string dynamically
@@ -12,8 +11,9 @@
 char *_itoa(int num)
 {
 	char buffer[20];
-	int i = 0, j, is_negative = 0;
+	int i = 0, j;
 	char *str;
+	unsigned int n;
 
 	if (num == 0)
 	{
@@ -24,18 +24,13 @@ char *_itoa(int num)
 		str[1] = '\0';
 		return (str);
 	}
-	if (num < 0)
+
+	n = num;
+	while (n > 0)
 	{
-		is_negative = 1;
-		num = -num;
+		buffer[i++] = (n % 10) + '0';
+		n /= 10;
 	}
-	while (num > 0)
-	{
-		buffer[i++] = (num % 10) + '0';
-		num /= 10;
-	}
-	if (is_negative)
-		buffer[i++] = '-';
 
 	str = malloc(i + 1);
 	if (!str)
@@ -60,7 +55,10 @@ void expand_variables(char **args, int last_status)
 	int i = 0;
 	char *var_value, *replacement_str;
 
-	while (args && args[i])
+	if (!args)
+		return;
+
+	while (args[i])
 	{
 		if (args[i][0] == '$' && args[i][1] != '\0' && args[i][1] != ' ')
 		{
@@ -78,17 +76,17 @@ void expand_variables(char **args, int last_status)
 			}
 			else
 			{
-				/* Assumes getenv is allowed. Use custom _getenv if required */
-				var_value = getenv(args[i] + 1);
+				/* استبدلي getenv و strdup بدوالك الخاصة إذا كانت مطلوبة */
+				var_value = getenv(args[i] + 1); 
 				free(args[i]);
+				
 				if (var_value)
-				{
 					args[i] = strdup(var_value);
-				}
 				else
 				{
 					args[i] = malloc(1);
-					args[i][0] = '\0'; /* Replace undefined vars with empty string */
+					if (args[i])
+						args[i][0] = '\0';
 				}
 			}
 		}
