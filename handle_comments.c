@@ -1,24 +1,23 @@
 #include "shell.h"
 
 /**
- * remove_comments - removes comments from the input string
- * @buf: the input string from getline
+ * remove_comments - Replaces '#' with '\0' if it starts a word
+ * @line: The input string
  *
  * Return: void
  */
-void remove_comments(char *buf)
+void remove_comments(char *line)
 {
 	int i = 0;
 
-	if (!buf)
+	if (!line)
 		return;
 
-	while (buf[i])
+	while (line[i])
 	{
-		/* Check if '#' is at the start or preceded by a space */
-		if (buf[i] == '#' && (i == 0 || buf[i - 1] == ' '))
+		if (line[i] == '#' && (i == 0 || line[i - 1] == ' '))
 		{
-			buf[i] = '\0';
+			line[i] = '\0';
 			break;
 		}
 		i++;

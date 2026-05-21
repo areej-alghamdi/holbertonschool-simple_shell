@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <string.h>
+#include <fcntl.h>
 
 extern char **environ;
 int _strlen(char *s);
@@ -19,7 +20,6 @@ char *_strdup(char *str);
 int is_delim(char c, const char *delim);
 char *_strtok(char *str, const char *delim);
 char *_getenv(const char *name);
-int _atoi_exit(char *s, int *error);
 int handle_builtins(char **args, char *line, char **av, int *last_status);
 int handle_cd(char **args, char **av, int *last_status);
 int match_env_name(char *env_var, char *name);
@@ -35,5 +35,7 @@ void sigint_handler(int sig);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_itoa(int num);
 void expand_variables(char **args, int last_status);
-
+void remove_comments(char *line);
+void handle_file_input(char **av);
+int handle_help(char **args);
 #endif
