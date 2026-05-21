@@ -76,7 +76,6 @@ void expand_variables(char **args, int last_status)
 			}
 			else
 			{
-				/* استبدلي getenv و strdup بدوالك الخاصة إذا كانت مطلوبة */
 				var_value = getenv(args[i] + 1); 
 				free(args[i]);
 				
