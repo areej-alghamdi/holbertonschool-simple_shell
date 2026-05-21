@@ -94,9 +94,10 @@ int main(int ac, char **av)
 	size_t len = 0;
 	int last_status = 0, k;
 
-	(void)ac;
 	signal(SIGINT, sigint_handler);
 	init_env();
+	if (ac == 2)
+		handle_file_input(av);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -112,9 +113,7 @@ int main(int ac, char **av)
 		}
 		if (line[read_bytes - 1] == '\n')
 			line[read_bytes - 1] = '\0';
-		
 		remove_comments(line);
-		
 		parse_command(line, args);
 		for (k = 0; args[k]; k++)
 			orig_args[k] = args[k];
@@ -122,10 +121,8 @@ int main(int ac, char **av)
 		expand_variables(args, last_status);
 		execute_command(args, av, line, &last_status);
 		for (k = 0; args[k]; k++)
-		{
 			if (args[k] != orig_args[k])
 				free(args[k]);
-		}
 	}
 	free(line);
 	free_env();

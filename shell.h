@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <string.h>
+#include <fcntl.h>
 
 extern char **environ;
 int _strlen(char *s);
@@ -35,6 +36,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_itoa(int num);
 void expand_variables(char **args, int last_status);
 void remove_comments(char *line);
-
 int handle_cd(char **args);
+void handle_file_input(char **av);
+
 #endif
