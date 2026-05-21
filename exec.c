@@ -76,7 +76,7 @@ int execute_command(char **args, char **av, char *line, int *last_status)
 	int status;
 	char *cmd_path;
 
-	if (args[0] == NULL || handle_builtins(args, line, av, *last_status))
+	if (args[0] == NULL || handle_builtins(args, line, av, last_status))
 		return (0);
 
 	cmd_path = get_location(args[0]);
