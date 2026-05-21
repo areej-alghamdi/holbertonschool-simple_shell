@@ -24,6 +24,7 @@ char *_getenv(const char *name);
 
 int _atoi_exit(char *s, int *error);
 int handle_builtins(char **args, char *line, char **av, int last_status);
+int handle_cd(char **args);
 
 int match_env_name(char *env_var, char *name);
 int _setenv(char *name, char *value);

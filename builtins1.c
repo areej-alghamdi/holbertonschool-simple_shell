@@ -75,5 +75,41 @@ int handle_builtins(char **args, char *line, char **av, int last_status)
 		}
 		return (1);
 	}
+	if (_strcmp(args[0], "cd") == 0)
+   		return (handle_cd(args));
 	return (handle_env_builtins(args));
 }
+/**
+ * handle_cd - changes the current working directory
+ * @args: parsed arguments (args[1] is the target directory)
+ * Return: 1 (always handled as a builtin)
+ */
+int handle_cd(char **args)
+{
+	char *target, *home, *oldpwd;
+	char cwd[1024];
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return (1);
+	home = _getenv("HOME");
+	oldpwd = _getenv("OLDPWD");
+	if (args[1] == NULL)
+		target = home;
+	else if (_strcmp(args[1], "-") == 0)
+		target = oldpwd;
+	else
+		target = args[1];
+	if (target == NULL || chdir(target) != 0)
+	{
+		write(STDERR_FILENO, "cd: can't cd to ", 16);
+		if (args[1])
+			write(STDERR_FILENO, args[1], _strlen(args[1]));
+		write(STDERR_FILENO, "\n", 1);
+		return (1);
+	}
+	_setenv("OLDPWD", cwd);
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		_setenv("PWD", cwd);
+	return (1);
+}
+
