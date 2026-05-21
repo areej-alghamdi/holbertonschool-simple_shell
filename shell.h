@@ -21,7 +21,6 @@ char *_strtok(char *str, const char *delim);
 char *_getenv(const char *name);
 int _atoi_exit(char *s, int *error);
 int handle_builtins(char **args, char *line, char **av, int last_status);
-int handle_cd(char **args);
 int match_env_name(char *env_var, char *name);
 int _setenv(char *name, char *value);
 int _unsetenv(char *name);
@@ -35,5 +34,6 @@ void sigint_handler(int sig);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_itoa(int num);
 void expand_variables(char **args, int last_status);
+void remove_comments(char *line);
 
 #endif

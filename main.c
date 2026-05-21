@@ -112,6 +112,9 @@ int main(int ac, char **av)
 		}
 		if (line[read_bytes - 1] == '\n')
 			line[read_bytes - 1] = '\0';
+		
+		remove_comments(line);
+		
 		parse_command(line, args);
 		for (k = 0; args[k]; k++)
 			orig_args[k] = args[k];
