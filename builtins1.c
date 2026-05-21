@@ -86,6 +86,7 @@ int handle_builtins(char **args, char *line, char **av, int *last_status)
  * @last_status: pointer to last command's exit status
  * Return: 1 (always handled as a builtin)
  */
+
 int handle_cd(char **args, char **av, int *last_status)
 {
 	char *target, *home, *oldpwd;
@@ -101,23 +102,31 @@ int handle_cd(char **args, char **av, int *last_status)
 		target = oldpwd;
 	else
 		target = args[1];
-        if (args[1] == NULL && home == NULL)
-                return (1);
-        if (target == NULL || chdir(target) != 0)
-        {
-		
-	    write(STDERR_FILENO, av[0], _strlen(av[0]));
+	if (args[1] == NULL && home == NULL)
+		return (1);
+	if (args[1] && _strcmp(args[1], "-") == 0 && oldpwd == NULL)
+	{
+		write(STDOUT_FILENO, cwd, _strlen(cwd));
+		write(STDOUT_FILENO, "\n", 1);
+		return (1);
+	}
+	if (target == NULL || chdir(target) != 0)
+	{
+		write(STDERR_FILENO, av[0], _strlen(av[0]));
 		write(STDERR_FILENO, ": 1: cd: can't cd to ", 21);
 		if (args[1])
 			write(STDERR_FILENO, args[1], _strlen(args[1]));
 		write(STDERR_FILENO, "\n", 1);
 		*last_status = 2;
-		return (1);		
-
+		return (1);
 	}
 	_setenv("OLDPWD", cwd);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		_setenv("PWD", cwd);
+	if (args[1] && _strcmp(args[1], "-") == 0)
+	{
+		write(STDOUT_FILENO, cwd, _strlen(cwd));
+		write(STDOUT_FILENO, "\n", 1);
+	}
 	return (1);
 }
-
