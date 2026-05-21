@@ -113,6 +113,7 @@ int main(int ac, char **av)
 		if (line[read_bytes - 1] == '\n')
 			line[read_bytes - 1] = '\0';
 		parse_command(line, args);
+		expand_variables(args, last_status);
 		execute_command(args, av, line, &last_status);
 	}
 	free(line);

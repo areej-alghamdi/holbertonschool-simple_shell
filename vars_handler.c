@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-/**
- * _itoa - Converts an integer to a string dynamically
- * @num: The integer to convert
- *
- * Return: A newly allocated string containing the number, or NULL on failure
- */
 char *_itoa(int num)
 {
 	char buffer[20];
@@ -24,32 +18,21 @@ char *_itoa(int num)
 		str[1] = '\0';
 		return (str);
 	}
-
 	n = num;
 	while (n > 0)
 	{
 		buffer[i++] = (n % 10) + '0';
 		n /= 10;
 	}
-
 	str = malloc(i + 1);
 	if (!str)
 		return (NULL);
-
 	for (j = 0; j < i; j++)
 		str[j] = buffer[i - 1 - j];
 	str[i] = '\0';
-
 	return (str);
 }
 
-/**
- * expand_variables - Replaces $?, $$, and environment variables in args
- * @args: Null-terminated array of command arguments
- * @last_status: The exit status of the previously executed command
- *
- * Return: void
- */
 void expand_variables(char **args, int last_status)
 {
 	int i = 0;
@@ -57,7 +40,6 @@ void expand_variables(char **args, int last_status)
 
 	if (!args)
 		return;
-
 	while (args[i])
 	{
 		if (args[i][0] == '$' && args[i][1] != '\0' && args[i][1] != ' ')
@@ -76,12 +58,12 @@ void expand_variables(char **args, int last_status)
 			}
 			else
 			{
-				/* استبدلي getenv و strdup بدوالك الخاصة إذا كانت مطلوبة */
-				var_value = getenv(args[i] + 1); 
+				var_value = _getenv(args[i] + 1);
 				free(args[i]);
-				
 				if (var_value)
-					args[i] = strdup(var_value);
+				{
+					args[i] = _strdup(var_value);
+				}
 				else
 				{
 					args[i] = malloc(1);
