@@ -89,10 +89,10 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 int main(int ac, char **av)
 {
-	char *line = NULL, *args[100];
-	size_t len = 0;
+	char *line = NULL, *args[100], *orig_args[100];
 	ssize_t read_bytes;
-	int last_status = 0;
+	size_t len = 0;
+	int last_status = 0, k;
 
 	(void)ac;
 	signal(SIGINT, sigint_handler);
@@ -113,8 +113,16 @@ int main(int ac, char **av)
 		if (line[read_bytes - 1] == '\n')
 			line[read_bytes - 1] = '\0';
 		parse_command(line, args);
+		for (k = 0; args[k]; k++)
+			orig_args[k] = args[k];
+		orig_args[k] = NULL;
 		expand_variables(args, last_status);
 		execute_command(args, av, line, &last_status);
+		for (k = 0; args[k]; k++)
+		{
+			if (args[k] != orig_args[k])
+				free(args[k]);
+		}
 	}
 	free(line);
 	free_env();
