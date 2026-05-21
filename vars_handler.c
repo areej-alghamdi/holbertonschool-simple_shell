@@ -47,19 +47,16 @@ void expand_variables(char **args, int last_status)
 			if (args[i][1] == '?')
 			{
 				replacement_str = _itoa(last_status);
-				free(args[i]);
 				args[i] = replacement_str;
 			}
 			else if (args[i][1] == '$')
 			{
 				replacement_str = _itoa(getpid());
-				free(args[i]);
 				args[i] = replacement_str;
 			}
 			else
 			{
 				var_value = _getenv(args[i] + 1);
-				free(args[i]);
 				if (var_value)
 				{
 					args[i] = _strdup(var_value);
