@@ -40,4 +40,5 @@ int handle_cd(char **args);
 void handle_file_input(char **av);
 
 int handle_help(char **args);
+int handle_help(char **args);
 #endif
