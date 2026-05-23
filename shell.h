@@ -12,6 +12,7 @@
 #include <fcntl.h>
 
 extern char **environ;
+
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strcpy(char *dest, char *src);
@@ -37,4 +38,9 @@ void expand_variables(char **args, int last_status);
 void remove_comments(char *line);
 void handle_file_input(char **av);
 int handle_help(char **args);
+
+/* Alias functions */
+int builtin_alias(char **args);
+void expand_aliases(char **args);
+
 #endif
